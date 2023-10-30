@@ -1,7 +1,8 @@
 const User = require('../models/user');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs'); // Used for encrypting passwords
 
-
+// Login Page
+// On GET
 exports.getLogin = (req, res, next) => {
     let message = req.flash('error'); // Used for invalid user alert
     if(message.length > 0){
@@ -16,6 +17,7 @@ exports.getLogin = (req, res, next) => {
     })
 }
 
+// On POST
 exports.postLogin = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -49,6 +51,8 @@ exports.postLogin = (req, res, next) => {
         })
 }
 
+//Register Page
+// On GET
 exports.getRegister = (req, res, next) => {
     let message = req.flash('error');
     if(message.length > 0){
@@ -62,6 +66,7 @@ exports.getRegister = (req, res, next) => {
     })
 }
 
+// On POST
 exports.postRegister = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -92,6 +97,7 @@ exports.postRegister = (req, res, next) => {
         })
 }
 
+// Logout on POST
 exports.postLogout = (req, res, next) => {
     req.session.destroy(err => {
         console.log(err);
