@@ -101,5 +101,13 @@ exports.postOrders = (req, res, next) => {
 
 // Delete Cart Item on POST
 exports.postDeleteCartItem = (req, res, next) => {
+    const prodId = req.body.productId;
 
+    req.user.deleteItem(prodId)
+        .then(() => {
+            res.redirect('/cart')
+        })
+        .catch(err => {
+            console.log(err)
+        })
 }
