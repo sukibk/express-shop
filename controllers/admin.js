@@ -49,3 +49,26 @@ exports.getAdminProducts = (req, res, next) => {
             console.log(err)
         })
 }
+
+// Admin Edit Product Page
+// On GET
+exports.getEditProduct = (req, res, next) => {
+    const productId = req.params.productId;
+    const editing = req.query.edit;
+
+    if(!editing) res.redirect('/');
+
+    Product.findById(productId)
+        .then(product => {
+            res.render('admin/edit-product', {
+                pageTitle: 'Edit' + product.title,
+                product: product,
+                path: '/admin/products',
+                editing: editing
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+}

@@ -12,4 +12,7 @@ router.post('/add-product', isAuthenticated, adminController.postAddProduct)
 // Admin Products Page
 router.get('/products', isAuthenticated, adminController.getAdminProducts);
 
+// Admin Edit Product Page
+router.get('/edit-product/:productId', isAuthenticated, adminController.getEditProduct);
+
 module.exports = router;
