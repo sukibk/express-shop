@@ -72,3 +72,42 @@ exports.getEditProduct = (req, res, next) => {
         })
 
 }
+
+// On POST
+exports.postEditProduct = (req, res, next) => {
+    const title = req.body.title;
+    const price = req.body.price;
+    const description = req.body.description;
+    const imageUrl = req.body.imageUrl;
+
+    const prodId = req.body.productId;
+
+    Product.findById(prodId)
+        .then(prod => {
+            prod.title = title;
+            prod.price = price;
+            prod.description = description;
+            prod.imageUrl = imageUrl;
+
+            return prod.save();
+        })
+        .then(() => {
+            res.redirect('/admin/products')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+// Admin Product Delete on POST
+exports.postDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+
+    Product.findByIdAndRemove(prodId)
+        .then(() => {
+            res.redirect('/admin/products')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
