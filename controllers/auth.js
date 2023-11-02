@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs'); // Used for encrypting passwords
+const mailSender = require('../utils/mail');
 
 // Login Page
 // On GET
@@ -93,7 +94,16 @@ exports.postRegister = (req, res, next) => {
                 })
         })
         .then(() => {
-            res.redirect('/')
+            res.redirect('/login');
+            return mailSender.sendMail({
+                to: email,
+                from: 'markosudar02@gmail.com',
+                subject: 'Shop Registration',
+                html: '<h1>Welcome to our Online Store!</h1>'
+            })
+        })
+        .catch(err => {
+            console.log(err)
         })
 }
 
