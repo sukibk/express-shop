@@ -1,5 +1,6 @@
 const Product = require('../models/product');
-const User =  require('../models/user')
+const User =  require('../models/user');
+const Order = require('../models/order');
 
 // Index Page on GET
 exports.getIndex = (req, res, next) => {
@@ -86,17 +87,44 @@ exports.postCart = (req, res, next) => {
 // Orders Page
 // On GET
 exports.getOrders = (req, res, next) => {
-
-    res.render('shop/cart',{
-        pageTitle: req.user.email + ' Cart',
-        path: '/cart',
-        products: []
-    })
+    Order.find({'user.userId': req.user._id})
+        .then(order => {
+            res.render('shop/orders', {
+                path: '/orders',
+                pageTitle: req.user.email + "'s Orders",
+                orders: order
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
 }
 
 // On POST
 exports.postOrders = (req, res, next) => {
-
+    req.user.populate('cart.items.productId')
+        .then(user => {
+            const products = user.cart.items.map(cartProduct => {
+                return {quantity: cartProduct.quantity, product: {...cartProduct.productId._doc}}
+            })
+            const order = new Order({
+                user: {
+                    email: req.user.email,
+                    userId: req.user,
+                },
+                products: products
+            })
+            return order.save();
+        })
+        .then(() => {
+            return req.user.clearCart()
+        })
+        .then(() => {
+            res.redirect('/orders')
+        })
+        .catch(err => {
+            console.log(err)
+        })
 }
 
 // Delete Cart Item on POST

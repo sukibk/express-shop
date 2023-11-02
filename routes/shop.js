@@ -18,7 +18,7 @@ router.post('/cart-delete-item', isAuthenticated, shopController.postDeleteCartI
 
 // Orders Page
 router.get('/orders', isAuthenticated, shopController.getOrders);
-router.post('/orders', isAuthenticated, shopController.postOrders);
+router.post('/create-order', isAuthenticated, shopController.postOrders);
 
 // Index Page
 router.get('/', shopController.getIndex);
