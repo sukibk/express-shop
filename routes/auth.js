@@ -6,6 +6,7 @@ const authController = require('../controllers/auth');
 // Get routes
 router.get('/login', authController.getLogin);
 router.get('/register', authController.getRegister);
+router.get('/reset', authController.getReset);
 
 // Post routes
 router.post('/login', authController.postLogin);
