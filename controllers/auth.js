@@ -73,7 +73,7 @@ exports.getRegister = (req, res, next) => {
 exports.postRegister = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
-    const repeatedPassword = req.body.repeatedPassword;
+    // const repeatedPassword = req.body.repeatedPassword;
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         console.log(errors.array())
@@ -84,25 +84,18 @@ exports.postRegister = (req, res, next) => {
         })
     }
 
-    if(repeatedPassword !== password){
-        req.flash('error', 'Passwords do not match')
-        return res.redirect('/register')
-    }
-
-    User.findOne({email: email})
-        .then(user => {
-            if(user){
-                req.flash('error', 'Email already registered')
-                res.redirect('/register')
-            }
-            return bcrypt.hash(password, 12)
-                .then(hashedPassword => {
-                    const newUser = new User({
-                        email: email,
-                        password: hashedPassword
-                    })
-                    return newUser.save();
-                })
+    // if(repeatedPassword !== password){
+    //     req.flash('error', 'Passwords do not match')
+    //     return res.redirect('/register')
+    // }
+    bcrypt
+        .hash(password, 12)
+        .then(hashedPassword => {
+            const newUser = new User({
+                email: email,
+                password: hashedPassword
+            })
+            return newUser.save();
         })
         .then(() => {
             res.redirect('/login');
