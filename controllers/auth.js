@@ -16,11 +16,15 @@ exports.getLogin = (req, res, next) => {
     path: "/login",
     pageTitle: "Login",
     errorMessage: message,
+    oldInput: { email: "", password: "" },
+    validationErrors: [],
   });
 };
 
 // On POST
 exports.postLogin = (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
@@ -28,6 +32,8 @@ exports.postLogin = (req, res, next) => {
       path: "/login",
       pageTitle: "Login",
       errorMessage: errors.array()[0].msg,
+      oldInput: { email: email, password: password },
+      validationErrors: errors.array(),
     });
   } else res.redirect("/");
 };
@@ -43,6 +49,8 @@ exports.getRegister = (req, res, next) => {
     path: "/register",
     pageTitle: "Register",
     errorMessage: message,
+    oldInput: { email: "", password: "", repeatedPassword: "" },
+    validationErrors: [],
   });
 };
 
@@ -50,13 +58,21 @@ exports.getRegister = (req, res, next) => {
 exports.postRegister = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+  const repeatedPassword = req.body.repeatedPassword;
   // const repeatedPassword = req.body.repeatedPassword;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log(errors.array());
     return res.status(422).render("auth/register", {
       path: "/register",
       pageTitle: "Register",
       errorMessage: errors.array()[0].msg,
+      oldInput: {
+        email: email,
+        password: password,
+        repeatedPassword: repeatedPassword,
+      },
+      validationErrors: errors.array(),
     });
   }
 
