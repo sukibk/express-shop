@@ -36,12 +36,12 @@ exports.registerValidator = [
 
 exports.loginValidator = [
   body("email", "Enter valid e-mail address").isEmail(),
-  check("password").custom((value, { req }) => {
+  body("password").custom((value, { req }) => {
     return User.findOne({ email: req.body.email }).then((user) => {
       if (!user) {
         return Promise.reject("User with this email address doesn't exist");
       }
-      bcrypt.compare(value, user.password).then((doMatch) => {
+      return bcrypt.compare(value, user.password).then((doMatch) => {
         if (!doMatch) {
           return Promise.reject("Invalid password");
         }
