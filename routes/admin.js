@@ -1,22 +1,41 @@
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 
-const adminController = require('../controllers/admin');
-const isAuthenticated = require('../middleware/is-auth')
+const adminController = require("../controllers/admin");
+const isAuthenticated = require("../middleware/is-auth");
+
+const { productValidator } = require("../utils/validators");
 
 // Add Product Page
-router.get('/add-product', isAuthenticated, adminController.getAddProduct);
-router.post('/add-product', isAuthenticated, adminController.postAddProduct);
+router.get("/add-product", isAuthenticated, adminController.getAddProduct);
+router.post(
+  "/add-product",
+  productValidator,
+  isAuthenticated,
+  adminController.postAddProduct
+);
 
 // Admin Products Page
-router.get('/products', isAuthenticated, adminController.getAdminProducts);
+router.get("/products", isAuthenticated, adminController.getAdminProducts);
 // - Delete Option
-router.post('/delete-product', isAuthenticated, adminController.postDeleteProduct);
+router.post(
+  "/delete-product",
+  isAuthenticated,
+  adminController.postDeleteProduct
+);
 
 // Admin Edit Product Page
-router.get('/edit-product/:productId', isAuthenticated, adminController.getEditProduct);
-router.post('/edit-product', isAuthenticated, adminController.postEditProduct);
-
+router.get(
+  "/edit-product/:productId",
+  isAuthenticated,
+  adminController.getEditProduct
+);
+router.post(
+  "/edit-product",
+  productValidator,
+  isAuthenticated,
+  adminController.postEditProduct
+);
 
 module.exports = router;
