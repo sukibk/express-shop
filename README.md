@@ -1,10 +1,11 @@
 # Shop App with Node.js and MongoDB
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/language-JavaScript-blue.svg)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/style-CSS-blueviolet.svg)](https://tailwindcss.com/)
-[![Three.js](https://img.shields.io/badge/graphics-Node.js-green.svg)](https://threejs.org/)
-[![Next.js](https://img.shields.io/badge/framework-Express.js-orange.svg)](https://nextjs.org/)
+[![JavaScript](https://img.shields.io/badge/language-JavaScript-blue.svg)](https://www.javascript.org/)
+[![CSS](https://img.shields.io/badge/style-CSS-blueviolet.svg)](https://css.com/)
+[![Node.js](https://img.shields.io/badge/graphics-Node.js-green.svg)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/framework-Express.js-orange.svg)](https://expressjs.org/)
+[![Mongodb](https://img.shields.io/badge/framework-Mongodb-orange.svg)](https://mongodb.com/)
 
 Welcome to the Shop App, a versatile e-commerce application built using Node.js and MongoDB. This app allows users to create accounts, log in, add new products, manage their shopping carts, and create orders. This README file will provide you with an overview of the app's features and instructions on how to set it up.
 
