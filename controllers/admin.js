@@ -23,9 +23,9 @@ exports.postAddProduct = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    res.status(422).render("admin/edit-product", {
+    return res.status(422).render("admin/edit-product", {
       pageTitle: "Add Product",
-      path: "/admin/products",
+      path: "/admin/add-product",
       editing: false,
       hasError: true,
       product: {
@@ -39,6 +39,7 @@ exports.postAddProduct = (req, res, next) => {
   }
 
   const newProduct = new Product({
+    _id: new mongoose.Types.ObjectId("654327ee4db6ba570b0212e0"),
     title: title,
     price: price,
     description: description,
@@ -52,7 +53,9 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect("/");
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -110,7 +113,7 @@ exports.postEditProduct = (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(422).render("admin/edit-product", {
       pageTitle: "Edit" + title,
-      path: "/admin/products/",
+      path: "/admin/products",
       editing: true,
       hasError: true,
       product: {
